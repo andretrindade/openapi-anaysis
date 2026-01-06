@@ -6,7 +6,8 @@
   "author": "André Trindade <andre.trindade@sensedia.com>",
   "private": true,
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "build": "quasar build"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^15.1.3",
