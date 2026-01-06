@@ -6,13 +6,14 @@
           <div class="text-h6">Open Finance API Architect Tool</div>
           <div class="text-subtitle2 text-grey-7">Complexity, Idempotency & Async Analysis</div>
         </div>
-        <div v-if="metrics.length > 0" class="col-auto">
+        <div class="col-auto">
           <q-btn 
             color="primary" 
             icon="archive" 
             label="Export CSV" 
             @click="exportCSV" 
             flat 
+            :disable="metrics.length === 0"
           />
         </div>
       </q-card-section>
