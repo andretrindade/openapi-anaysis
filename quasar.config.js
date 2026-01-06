@@ -61,7 +61,6 @@ module.exports = configure(function (/* ctx */) {
       // vueOptionsAPI: false,
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
-      publicPath: '/andretrindade/openapi-anaysis',
        publicPath: process.env.NODE_ENV == "development" ? '' : parsedEnv.DOMAIN_NAME,
       // analyze: true,
        env: parsedEnv,
