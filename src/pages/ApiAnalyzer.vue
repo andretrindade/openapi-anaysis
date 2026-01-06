@@ -23,6 +23,7 @@
           label="Upload openapi file (.yaml / .yml)" 
           outlined 
           dense
+          accept=".yaml, .yml"
           @update:model-value="processFile"
         >
           <template v-slot:prepend><q-icon name="cloud_upload" /></template>
