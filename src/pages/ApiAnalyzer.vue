@@ -22,10 +22,10 @@
 
       <q-card-section>
         <div class="row q-col-gutter-md">
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-4">
             <q-file
               v-model="ymlFile"
-              label="Upload openapi file (.yaml / .yml)"
+              label="1. Upload arquivo OpenAPI (.yaml / .yml)"
               outlined
               dense
               accept=".yaml, .yml"
@@ -34,10 +34,10 @@
               <template v-slot:prepend><q-icon name="cloud_upload" /></template>
             </q-file>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-4">
             <q-input
               v-model="ymlUrl"
-              label="Ou cole a URL do arquivo OpenAPI"
+              label="2. Ou cole a URL do arquivo OpenAPI"
               outlined
               dense
               @keyup.enter="loadFromUrl"
@@ -55,50 +55,129 @@
               </template>
             </q-input>
           </div>
+          <div class="col-12 col-md-4">
+            <q-file
+              v-model="configFile"
+              label="3. Ou upload config.json (múltiplas jornadas)"
+              outlined
+              dense
+              accept=".json"
+              @update:model-value="processConfigFile"
+            >
+              <template v-slot:prepend><q-icon name="settings" /></template>
+            </q-file>
+          </div>
+        </div>
+
+        <q-expansion-item
+          dense
+          dense-toggle
+          expand-separator
+          icon="info"
+          label="Formato do config.json"
+          class="q-mt-md"
+        >
+          <q-card>
+            <q-card-section>
+              <pre class="text-caption">{{
+                `[
+  {
+    "jornada": "Portabilidade de Crédito",
+    "nomeArquivo": "credit-portability.yml",
+    "url": "https://openbanking-brasil.github.io/openapi/swagger-apis/credit-portability/1.0.0.yml"
+  },
+  {
+    "jornada": "Conta de Pagamento",
+    "nomeArquivo": "payment-account.yml",
+    "url": "https://..."
+  }
+]`
+              }}</pre>
+            </q-card-section>
+          </q-card>
+        </q-expansion-item>
+      </q-card-section>
+
+      <q-card-section v-if="isLoadingMultiple">
+        <q-linear-progress
+          :value="loadingProgress"
+          color="primary"
+          class="q-mb-md"
+        />
+        <div class="text-center text-caption">
+          Carregando jornada {{ currentLoadingIndex }} de {{ totalJornadas }}
         </div>
       </q-card-section>
 
-      <q-table
-        v-if="metrics.length > 0"
-        :rows="metrics"
-        :columns="columns"
-        row-key="id"
-        flat
-        bordered
-        :pagination="{ rowsPerPage: 0 }"
-      >
-        <template v-slot:body-cell-isIdempotent="props">
-          <q-td :props="props">
-            <q-chip
-              :color="props.value === 'Sim' ? 'green-1' : 'grey-2'"
-              :text-color="props.value === 'Sim' ? 'green-9' : 'grey-7'"
-              dense
-              label
+      <div v-if="metrics.length > 0">
+        <div
+          v-for="(jornada, idx) in groupedJornadas"
+          :key="jornada.nome"
+          class="q-mb-lg"
+        >
+          <q-card
+            :style="{ borderLeft: `4px solid ${jornada.cor}` }"
+            flat
+            bordered
+          >
+            <q-card-section
+              class="row items-center"
+              :style="{ backgroundColor: jornada.cor + '15' }"
             >
-              {{ props.value }}
-            </q-chip>
-          </q-td>
-        </template>
+              <div class="col">
+                <div class="text-h6" :style="{ color: jornada.cor }">
+                  {{ jornada.nome }}
+                </div>
+                <div class="text-caption text-grey-7">
+                  {{ jornada.nomeArquivo || "Arquivo único" }} -
+                  {{ jornada.endpoints.length }} endpoints
+                </div>
+              </div>
+            </q-card-section>
 
-        <template v-slot:body-cell-isAsync="props">
-          <q-td :props="props">
-            <q-chip
-              :color="props.value === 'Sim' ? 'green-1' : 'grey-2'"
-              :text-color="props.value === 'Sim' ? 'green-9' : 'grey-7'"
-              dense
-              label
+            <q-table
+              :rows="jornada.endpoints"
+              :columns="columns"
+              row-key="id"
+              flat
+              :pagination="{ rowsPerPage: 0 }"
+              hide-bottom
             >
-              {{ props.value }}
-            </q-chip>
-          </q-td>
-        </template>
-      </q-table>
+              <template v-slot:body-cell-isIdempotent="props">
+                <q-td :props="props">
+                  <q-chip
+                    :color="props.value === 'Sim' ? 'green-1' : 'grey-2'"
+                    :text-color="props.value === 'Sim' ? 'green-9' : 'grey-7'"
+                    dense
+                    label
+                  >
+                    {{ props.value }}
+                  </q-chip>
+                </q-td>
+              </template>
+
+              <template v-slot:body-cell-isAsync="props">
+                <q-td :props="props">
+                  <q-chip
+                    :color="props.value === 'Sim' ? 'green-1' : 'grey-2'"
+                    :text-color="props.value === 'Sim' ? 'green-9' : 'grey-7'"
+                    dense
+                    label
+                  >
+                    {{ props.value }}
+                  </q-chip>
+                </q-td>
+              </template>
+            </q-table>
+          </q-card>
+        </div>
+      </div>
     </q-card>
   </q-page>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import jsYaml from "js-yaml";
 import $RefParser from "@apidevtools/json-schema-ref-parser";
 import { exportFile, useQuasar } from "quasar";
@@ -109,8 +188,25 @@ const $q = useQuasar();
 
 const ymlFile = ref(null);
 const ymlUrl = ref("");
+const configFile = ref(null);
 const isLoadingUrl = ref(false);
+const isLoadingMultiple = ref(false);
+const currentLoadingIndex = ref(0);
+const totalJornadas = ref(0);
 const metrics = ref([]);
+
+const coresPaleta = [
+  "#1976D2",
+  "#388E3C",
+  "#D32F2F",
+  "#F57C00",
+  "#7B1FA2",
+  "#0097A7",
+  "#C2185B",
+  "#5D4037",
+  "#455A64",
+  "#00897B",
+];
 
 const columns = [
   { name: "path", label: "Endpoint", field: "path", align: "left" },
@@ -160,6 +256,30 @@ const columns = [
   },
 ];
 
+const groupedJornadas = computed(() => {
+  const grupos = {};
+
+  metrics.value.forEach((metric) => {
+    const jornadaNome = metric.jornada || "Arquivo Único";
+    if (!grupos[jornadaNome]) {
+      grupos[jornadaNome] = {
+        nome: jornadaNome,
+        nomeArquivo: metric.nomeArquivo,
+        cor: metric.cor,
+        endpoints: [],
+      };
+    }
+    grupos[jornadaNome].endpoints.push(metric);
+  });
+
+  return Object.values(grupos);
+});
+
+const loadingProgress = computed(() => {
+  if (totalJornadas.value === 0) return 0;
+  return currentLoadingIndex.value / totalJornadas.value;
+});
+
 function wrapCsvValue(val) {
   let formatted = val !== void 0 && val !== null ? String(val) : "";
   formatted = formatted.split('"').join('""');
@@ -167,10 +287,16 @@ function wrapCsvValue(val) {
 }
 
 const exportCSV = () => {
-  const content = [columns.map((col) => wrapCsvValue(col.label))]
+  const csvColumns = [
+    { name: "jornada", label: "Jornada" },
+    { name: "nomeArquivo", label: "Arquivo" },
+    ...columns,
+  ];
+
+  const content = [csvColumns.map((col) => wrapCsvValue(col.label))]
     .concat(
       metrics.value.map((row) =>
-        columns
+        csvColumns
           .map((col) =>
             wrapCsvValue(
               typeof col.field === "function"
@@ -232,12 +358,10 @@ const loadFromUrl = async () => {
 
   isLoadingUrl.value = true;
   try {
-    // Tenta carregar diretamente primeiro
     let response;
     try {
       response = await fetch(ymlUrl.value);
     } catch (corsError) {
-      // Se falhar por CORS, usa um proxy CORS
       const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(ymlUrl.value)}`;
       response = await fetch(proxyUrl);
     }
@@ -249,7 +373,6 @@ const loadFromUrl = async () => {
       type: "application/x-yaml",
     });
 
-    // Reutiliza a função de processamento de arquivo
     await processFile(file);
 
     $q.notify({
@@ -269,13 +392,18 @@ const loadFromUrl = async () => {
   }
 };
 
-const processFile = async (file) => {
+const processFile = async (
+  file,
+  jornadaNome = null,
+  nomeArquivo = null,
+  cor = null,
+) => {
   if (!file) return;
   const reader = new FileReader();
   reader.onload = async (e) => {
     try {
       const rawYaml = e.target.result;
-      await analyzeYaml(rawYaml);
+      await analyzeYaml(rawYaml, jornadaNome, nomeArquivo, cor);
     } catch (err) {
       console.error("Analysis Error:", err);
       $q.notify({
@@ -288,7 +416,12 @@ const processFile = async (file) => {
   reader.readAsText(file);
 };
 
-const analyzeYaml = async (rawYaml) => {
+const analyzeYaml = async (
+  rawYaml,
+  jornadaNome = null,
+  nomeArquivo = null,
+  cor = null,
+) => {
   const api = await $RefParser.dereference(jsYaml.load(rawYaml));
   const results = [];
 
@@ -314,7 +447,10 @@ const analyzeYaml = async (rawYaml) => {
       const resMetrics = walkSchema(resSchema);
 
       results.push({
-        id: `${path}-${method}`,
+        id: `${jornadaNome || "default"}-${path}-${method}`,
+        jornada: jornadaNome,
+        nomeArquivo: nomeArquivo,
+        cor: cor || coresPaleta[0],
         path,
         method: method.toUpperCase(),
         isIdempotent: hasIdempotency,
@@ -328,6 +464,86 @@ const analyzeYaml = async (rawYaml) => {
       });
     }
   }
-  metrics.value = results;
+
+  if (jornadaNome) {
+    metrics.value = [...metrics.value, ...results];
+  } else {
+    metrics.value = results;
+  }
+};
+
+const processConfigFile = async (file) => {
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const config = JSON.parse(e.target.result);
+
+      if (!Array.isArray(config)) {
+        throw new Error(
+          "O arquivo config.json deve conter um array de jornadas",
+        );
+      }
+
+      metrics.value = [];
+
+      isLoadingMultiple.value = true;
+      totalJornadas.value = config.length;
+      currentLoadingIndex.value = 0;
+
+      for (let i = 0; i < config.length; i++) {
+        const item = config[i];
+        currentLoadingIndex.value = i + 1;
+
+        if (!item.url || !item.jornada) {
+          console.warn("Item inválido no config.json:", item);
+          continue;
+        }
+
+        try {
+          let response;
+          try {
+            response = await fetch(item.url);
+          } catch (corsError) {
+            const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(item.url)}`;
+            response = await fetch(proxyUrl);
+          }
+
+          if (!response.ok) throw new Error(`Erro ao baixar ${item.jornada}`);
+
+          const rawYaml = await response.text();
+          const cor = coresPaleta[i % coresPaleta.length];
+
+          // Analisa o YAML
+          await analyzeYaml(rawYaml, item.jornada, item.nomeArquivo, cor);
+        } catch (err) {
+          console.error(`Erro ao processar ${item.jornada}:`, err);
+          $q.notify({
+            message: `Erro ao carregar ${item.jornada}: ${err.message}`,
+            color: "warning",
+            icon: "warning",
+          });
+        }
+      }
+
+      isLoadingMultiple.value = false;
+
+      $q.notify({
+        message: `${config.length} jornadas carregadas com sucesso!`,
+        color: "positive",
+        icon: "check_circle",
+      });
+    } catch (err) {
+      console.error("Config File Error:", err);
+      $q.notify({
+        message: "Erro ao processar config.json: " + err.message,
+        color: "negative",
+        icon: "error",
+      });
+      isLoadingMultiple.value = false;
+    }
+  };
+  reader.readAsText(file);
 };
 </script>
