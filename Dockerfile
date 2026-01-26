@@ -22,8 +22,6 @@ COPY . .
 #USER node
 RUN npm install
 
-# Expose the port that the application listens on.
-EXPOSE 9000
 
 # Run the application.
-CMD npx quasar dev
+CMD npm  quasar dev

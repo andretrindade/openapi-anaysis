@@ -1,0 +1,54 @@
+[
+  {
+    "journey": "Jornada de Compartilhamento",
+    "apis": [
+      {
+        "urlOpenFile": "https://openbanking-brasil.github.io/openapi/swagger-apis/consents/3.3.1.yml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1378385987/Informa+es+T+cnicas+-+DC+Consentimento+-+v3.3.1"
+      },
+      {
+        "urlOpenFile": "https://raw.githubusercontent.com/OpenBanking-Brasil/openapi/main/swagger-apis/customers/2.2.1.yml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/887914678/Informa+es+T+cnicas+-+DC+Dados+Cadastrais+-+v2.2.1"
+      }
+    ]
+  },
+  {
+    "journey": "Jornada de Pagamento",
+    "apis": [
+      {
+        "urlOpenFile": "https://raw.githubusercontent.com/OpenBanking-Brasil/all-services-repo/refs/heads/main/api_payment_initiation_-_open_finance_brasil/5.0.0-beta.1.yaml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1283522868/Informa+es+T+cnicas+-+SV+Pagamentos+-+v5.0.0-beta.1"
+      },
+      {
+        "urlOpenFile": "https://raw.githubusercontent.com/OpenBanking-Brasil/all-services-repo/refs/heads/main/api_automatic_payments_-_open_finance_brasil/2.2.0.yaml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1178042617/Informa+es+T+cnicas+-+SV+Pagamentos+Autom+ticos+-+v2.2.0"
+      }
+    ]
+  },{
+    "journey": "Jornada Sem Redirecionamento",
+    "apis": [
+      {
+        "urlOpenFile": "https://raw.githubusercontent.com/OpenBanking-Brasil/all-services-repo/refs/heads/main/api_enrollments_for_payment_initiation_-_open_finance_brasil/2.2.0.yaml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1436516608/Informa+es+T+cnicas+-+SV+V+nculo+de+dispositivo+-+v2.2.0"
+      }
+    ]
+  },
+  {
+    "journey": "Jornada Portabilidade de Crédito",
+    "apis": [
+      {
+        "urlOpenFile": "https://openbanking-brasil.github.io/openapi/swagger-apis/consents/3.3.1.yml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1378385987/Informa+es+T+cnicas+-+DC+Consentimento+-+v3.3.1"
+      },
+
+      {
+        "urlOpenFile": "https://openbanking-brasil.github.io/openapi/swagger-apis/credit-portability/1.0.0.yml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1141637284/Swagger+-+v1.0.0+-+PC+Portabilidade+de+Cr+dito+-+CPC"
+      },
+      {
+        "urlOpenFile": "https://raw.githubusercontent.com/OpenBanking-Brasil/openapi/main/swagger-apis/loans/2.5.0.yml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1039073446/Informa+es+T+cnicas+-+DC+Empr+stimos+-+v2.5.0"
+      }
+    ]
+  }
+]
