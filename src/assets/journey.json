@@ -7,7 +7,59 @@
         "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/1378385987/Informa+es+T+cnicas+-+DC+Consentimento+-+v3.3.1"
       },
       {
-        "urlOpenFile": "https://raw.githubusercontent.com/OpenBanking-Brasil/openapi/main/swagger-apis/customers/2.2.1.yml",
+        "urlOpenFile": "https://openbanking-brasil.github.io/openapi/swagger-apis/resources/3.1.0.yml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/887914678/Informa+es+T+cnicas+-+DC+Dados+Cadastrais+-+v2.2.1"
+      },
+      {
+        "urlOpenFile": "https://raw.githubusercontent.com/OpenBanking-Brasil/all-services-repo/refs/heads/main/api_customers_-_open_finance_brasil/2.3.0.yaml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/887914678/Informa+es+T+cnicas+-+DC+Dados+Cadastrais+-+v2.2.1"
+      },
+      {
+        "urlOpenFile": "https://raw.githubusercontent.com/OpenBanking-Brasil/all-services-repo/refs/heads/main/api_credit-cards-accounts_-_open_finance_brasil/2.4.0.yaml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/887914678/Informa+es+T+cnicas+-+DC+Dados+Cadastrais+-+v2.2.1"
+      },
+      {
+        "urlOpenFile": "https://raw.githubusercontent.com/OpenBanking-Brasil/all-services-repo/refs/heads/main/api_accounts_-_open_finance_brasil/2.5.0.yaml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/887914678/Informa+es+T+cnicas+-+DC+Dados+Cadastrais+-+v2.2.1"
+      },
+      {
+        "urlOpenFile": "https://raw.githubusercontent.com/OpenBanking-Brasil/all-services-repo/refs/heads/main/api_loans_-_open_finance_brasil/2.6.0.yaml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/887914678/Informa+es+T+cnicas+-+DC+Dados+Cadastrais+-+v2.2.1"
+      },
+      {
+        "urlOpenFile": "https://raw.githubusercontent.com/OpenBanking-Brasil/openapi/main/swagger-apis/financings/2.4.0.yml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/887914678/Informa+es+T+cnicas+-+DC+Dados+Cadastrais+-+v2.2.1"
+      },
+      {
+        "urlOpenFile": "https://raw.githubusercontent.com/OpenBanking-Brasil/openapi/main/swagger-apis/unarranged-accounts-overdraft/2.5.0.yml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/887914678/Informa+es+T+cnicas+-+DC+Dados+Cadastrais+-+v2.2.1"
+      },
+      {
+        "urlOpenFile": "https://raw.githubusercontent.com/OpenBanking-Brasil/openapi/main/swagger-apis/invoice-financings/2.4.0.yml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/887914678/Informa+es+T+cnicas+-+DC+Dados+Cadastrais+-+v2.2.1"
+      },
+      {
+        "urlOpenFile": "https://openbanking-brasil.github.io/openapi/swagger-apis/bank-fixed-incomes/1.1.0.yml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/887914678/Informa+es+T+cnicas+-+DC+Dados+Cadastrais+-+v2.2.1"
+      },
+      {
+        "urlOpenFile": "https://openbanking-brasil.github.io/openapi/swagger-apis/credit-fixed-incomes/1.1.0.yml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/887914678/Informa+es+T+cnicas+-+DC+Dados+Cadastrais+-+v2.2.1"
+      },
+      {
+        "urlOpenFile": "https://raw.githubusercontent.com/OpenBanking-Brasil/openapi/main/swagger-apis/variable-incomes/1.3.0.yml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/887914678/Informa+es+T+cnicas+-+DC+Dados+Cadastrais+-+v2.2.1"
+      },
+      {
+        "urlOpenFile": "https://openbanking-brasil.github.io/openapi/swagger-apis/treasure-titles/1.1.0.yml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/887914678/Informa+es+T+cnicas+-+DC+Dados+Cadastrais+-+v2.2.1"
+      },
+      {
+        "urlOpenFile": "https://openbanking-brasil.github.io/openapi/swagger-apis/funds/1.1.0.yml",
+        "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/887914678/Informa+es+T+cnicas+-+DC+Dados+Cadastrais+-+v2.2.1"
+      },
+      {
+        "urlOpenFile": "https://raw.githubusercontent.com/OpenBanking-Brasil/all-services-repo/refs/heads/main/api_exchanges_-_open_finance_brasil/1.1.0.yaml",
         "urlDocument": "https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/887914678/Informa+es+T+cnicas+-+DC+Dados+Cadastrais+-+v2.2.1"
       }
     ]
